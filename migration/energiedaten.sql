@@ -39,3 +39,7 @@ ALTER TABLE `werte`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 ALTER TABLE `werte`
   ADD CONSTRAINT `werte_ibfk_1` FOREIGN KEY (`kennwertIdf`) REFERENCES `kennwerte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `werte`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `einmaligkeit` (`kennwertIdf`,`unixzeitstempel`,`wert`) USING BTREE,
+  ADD KEY `kennwertIdf` (`kennwertIdf`);

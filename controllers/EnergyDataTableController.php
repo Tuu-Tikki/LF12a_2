@@ -2,7 +2,7 @@
 
 class EnergyDataTableController {
     public function getTableData() {
-        $rawData = Database::getEnergyData(20);
+        $rawData = DatabaseTableWerte::getEnergyData(20);
         $table = [];
         foreach ($rawData as $entry) {
             $row[0] = $entry['datumzeit'];
@@ -15,6 +15,6 @@ class EnergyDataTableController {
     }
     
     public function getRowCount() {
-        return Database::getRowCount();
+        return DatabaseTableWerte::getRowCount();
     }
 }

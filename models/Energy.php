@@ -31,22 +31,23 @@ class Energy {
     }
     
     public static function createFromRawData($rawData) {
-        if (!array_key_exists('id', $rawData)) {
+        if (self::isDataValid($rawData)) {
+            $data = $rawData['data'];
+            $energyBunchByType = [];
+            $type = ENERGYTYPE[$rawData['id']];
+            foreach($data as $timeValuePair) {
+                $energy = new self($type, $timeValuePair[0], (float)$timeValuePair[1]);
+                $energyBunchByType[] = $energy;
+            }
+            return $energyBunchByType;
+        } else {
             return null;
         }
-        if (!array_key_exists($rawData['id'], ENERGYTYPE)) {
-            return null;
-        }
-        $type = ENERGYTYPE[$rawData['id']];
-        if (!array_key_exists('data', $rawData)) {
-            return null;
-        }
-        $data = $rawData['data'];
-        $energyBunchByType = [];
-        foreach($data as $timeValuePair) {
-            $energy = new self($type, $timeValuePair[0], (float)$timeValuePair[1]);
-            $energyBunchByType[] = $energy;
-        }
-        return $energyBunchByType;
+    }
+    
+    public static function isDataValid($rawData) {
+        return array_key_exists('id', $rawData) && 
+               array_key_exists($rawData['id'], ENERGYTYPE) &&
+               array_key_exists('data', $rawData);               
     }
 }

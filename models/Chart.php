@@ -2,21 +2,13 @@
 
 class Chart {
     
-    private String $url;
-    private String $answer = "";
-
-    function __construct(String $url) {
-        $this->url = $url;
-        $this->answer = $this->getAnswer();
-    }
-    
-    public function parseJson() {
+    public static function parseJson($answer) {
         $pattern = '/.+series\\\\":\[/';                
         $replacement = "\[";                
-        $json = preg_replace($pattern, $replacement, $this->answer);
+        $json = preg_replace($pattern, $replacement, $answer);
 
-        $replacement = "\]";
         $pattern = '/\]}}\)\(\).+/';
+        $replacement = "\]";
         $json = preg_replace($pattern, $replacement, $json);
 
         $pattern = '/<\\\\\\\\\\\\/';
@@ -34,17 +26,16 @@ class Chart {
         return json_decode($json, true);
     }
     
-    public function getAnswer() {
-        $this->answer = @file_get_contents($this->url);
-        return $this->answer;
+    public function getData($begin, $end) {
+        $url = self::createUrl($begin, $end);
+        return self::parseJson(@file_get_contents($url));
     }
     
     public static function createUrl($begin, $end) {
-        $requestUrl = NULL;
+        $requestUrl = null;
         $begin = date("d.m.Y", strtotime($begin));
         $end = date("d.m.Y", strtotime($end));
-        $requestUrl = "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/"
-                       . $begin . "/" . $end . "/today/chart.json";      
+        $requestUrl = URL['part1'] . $begin . "/" . $end . URL['part2'];      
         
         return $requestUrl;
     }

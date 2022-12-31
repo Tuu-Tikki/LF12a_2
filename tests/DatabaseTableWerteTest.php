@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 include_once '../load.php';
 
-class DatabaseTest extends TestCase{
+class DatabaseTableWerteTest extends TestCase {
     /** @test */
     public function getAll() {     
         $this->assertIsArray(Database::getAll());
@@ -13,11 +13,6 @@ class DatabaseTest extends TestCase{
 //    public function write() {     
 //        $this->assertEquals(1, Database::write(new Energy(1, "1662391100000", 1)));
 //    }
-    
-    /** @test*/
-    public function isExist() {
-        $this->assertTrue(Database::isExist());
-    }
     
     /** @test*/
     public function getEnergyData() {
@@ -31,12 +26,7 @@ class DatabaseTest extends TestCase{
     
     /** @test */
     public function isValueExist() {
-        $energy = new Energy(1, "1668191200000", 5);
+        $energy = new Energy(6, "1672318800000", 509.5);
         $this->assertFalse(Database::isValueExist($energy));
     }
-    
-//    /** @test */
-//    public function create() {
-//        $this->assertTrue(Database::create());
-//    }
 }

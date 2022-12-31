@@ -1,15 +1,10 @@
 <?php
 
 class RequestController {
-    private String $url;
-    private Chart $chart;
-    function __construct($beginDate, $endDate) {
-        $this->url = Chart::createUrl($beginDate, $endDate);
-        $this->chart = new Chart($this->url);
-    }
-    
-    public function getEnergyData() {
-        $rawData = $this->chart->parseJson();
+       
+    public function getEnergyData($beginDate, $endDate) {
+        $chart = new Chart();
+        $rawData = $chart->getData($beginDate, $endDate);
         $energyData = [];
         if (is_null($rawData)) {
             return null;
@@ -25,9 +20,13 @@ class RequestController {
     
     public function saveEnergyData($energyData) {
         foreach ($energyData as $energy) {
-            if (!Database::isValueExist($energy)) {
-                Database::write($energy);
+            if (!DatabaseTableWerte::isValueExist($energy)) {
+                DatabaseTableWerte::write($energy);
             }
         }
+    }
+    
+    public function isSubmitted() {
+        return !(empty($_POST['beginDate']) || empty($_POST['endDate']));
     }
 }
