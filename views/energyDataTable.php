@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <div>
     <h4>Energiedaten</h4>
     <h5>Es gibt <?php echo $rowCount; ?> Einträge in Datenbank</h5>

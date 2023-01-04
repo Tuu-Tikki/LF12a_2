@@ -5,28 +5,23 @@ include_once '../load.php';
 
 class DatabaseTableWerteTest extends TestCase {
     /** @test */
-    public function getAll() {     
-        $this->assertIsArray(Database::getAll());
+    public function getAllShouldReturnArray() {     
+        $this->assertIsArray(DatabaseTableWerte::getAll());
     }
-    
-//    /** @test */
-//    public function write() {     
-//        $this->assertEquals(1, Database::write(new Energy(1, "1662391100000", 1)));
-//    }
-    
+      
     /** @test*/
-    public function getEnergyData() {
-        $this->assertIsArray(Database::getEnergyData(2));
+    public function getEnergyDataShouldReturnArray() {
+        $this->assertIsArray(DatabaseTableWerte::getEnergyData(2));
     }
     
     /** @test */
-    public function getRowCount() {
-        $this->assertEquals(315, Database::getRowCount());
+    public function getRowCountShouldReturnNumber() {
+        $this->assertIsNumeric(DatabaseTableWerte::getRowCount());
     }
     
     /** @test */
-    public function isValueExist() {
-        $energy = new Energy(6, "1672318800000", 509.5);
-        $this->assertFalse(Database::isValueExist($energy));
+    public function isValueNotExistShouldReturnFalse() {
+        $energy = new Energy(36, "9672318800000", 509.5);
+        $this->assertFalse(DatabaseTableWerte::isValueExist($energy));
     }
 }

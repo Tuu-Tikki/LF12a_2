@@ -9,8 +9,6 @@ define("PASSWORD", "energieDatenLF12");
 define("ADMIN", "root");
 define("ADMINPASS", "");
 
-define("DIR", "C:\\xampp\htdocs\LF12a_2\\");
-
 define("URL", [
             "part1" => "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/",
             "part2" => "/today/chart.json"

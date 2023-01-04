@@ -8,7 +8,7 @@
     
     <body>
         <div>
-            <p><?php echo $errorMessage ?></p>
+            <p><?php echo $message ?></p>
         </div>
         <?php require_once 'requestForm.html'; ?>        
         <?php require_once 'energyDataTable.php'; ?>                      

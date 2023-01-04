@@ -19,7 +19,6 @@ class DatabaseTableWerte {
         $sql = "INSERT INTO werte(kennwertIdf, unixzeitstempel, datumzeit, wert) VALUES(:idf, :timestamp, :datetime, :value)";
         $statement = $pdo->prepare($sql);
         $result = $statement->execute([":idf" => $energyData->getType(), ":timestamp" => $energyData->getTimeStamp(), ":datetime" => $energyData->getDateTime(), ":value" => $energyData->getValue()]);
-        return $statement->rowCount();
     }
     
     public static function isValueExist(Energy $energyData) {

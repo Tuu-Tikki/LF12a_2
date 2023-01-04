@@ -5,20 +5,21 @@ require_once 'load.php';
 $db = new DatabaseEnergiedaten();
 if (!$db->isExist()) {
     $db->create();
+    $db->createUser();
 }
 
-$errorMessage = "";
+$message = "";
 
-$request = new RequestController();
-if ($request->isSubmitted()) {
-    $data = $request->getEnergyData($_POST['beginDate'], $_POST['endDate']);
-    if (is_null($data)) {
-        $errorMessage = "Keine Daten für den angegebenen Zeitraum: [" . 
-                        $_POST['beginDate'] . "] - [" . $_POST['endDate'] . "]";
-    } else {
-        foreach ($data as $energyBunchByType) {
-            $request->saveEnergyData($energyBunchByType);
-        }
+if (RequestController::isRequestSubmitted()) {
+    $request = new RequestController();
+    $beginDate = $_POST['beginDate'];
+    $endDate = $_POST['endDate'];
+    
+    $data = $request->getEnergyData($beginDate, $endDate);
+    $message = $request->resultMessage($data, $beginDate, $endDate);
+
+    foreach ($data as $energyBunchByType) {
+        $request->saveEnergyData($energyBunchByType);
     }
 } 
 

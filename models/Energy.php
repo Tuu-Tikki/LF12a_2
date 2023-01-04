@@ -30,19 +30,20 @@ class Energy {
         return $this->timestamp;        
     }
     
-    public static function createFromRawData($rawData) {
-        if (self::isDataValid($rawData)) {
-            $data = $rawData['data'];
-            $energyBunchByType = [];
-            $type = ENERGYTYPE[$rawData['id']];
+    public static function createFromRawData($rawDataByType) {
+        
+        $energyBunchByType = [];
+        
+        if (self::isDataValid($rawDataByType)) {
+            $data = $rawDataByType['data'];
+            $type = ENERGYTYPE[$rawDataByType['id']];
             foreach($data as $timeValuePair) {
                 $energy = new self($type, $timeValuePair[0], (float)$timeValuePair[1]);
                 $energyBunchByType[] = $energy;
             }
-            return $energyBunchByType;
-        } else {
-            return null;
         }
+        
+        return $energyBunchByType;
     }
     
     public static function isDataValid($rawData) {
