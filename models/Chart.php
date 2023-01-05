@@ -3,16 +3,18 @@
 class Chart {
     
     public static function parseJson($answer) {
+        $json = "";
+        
         $pattern = '/\[{\\\\"id\\\\":.+\]\]}\]/';                  
-        echo "\n" . $answer . "\n";
         $result = preg_match_all($pattern, $answer, $matches);
-        echo "Result: " . $result . "\n";
-        $str = stripslashes($matches[0][0]);
-        echo $str;
-        $file = fopen('test.txt', 'w');
-        fwrite($file, $str);
-        fclose($file);
-        return json_decode($str, true);
+        if(array_key_exists('0', $matches[0])) {
+            $json = stripslashes($matches[0][0]);
+
+            $pattern = '/,\"events\":{\"legendItemClick\":showConventionalSeries,\"hide\":hideConventionalSeries}/';
+            $replacement = "";
+            $json = preg_replace($pattern, $replacement, $json);
+        }
+        return json_decode($json, true);
     }
     
     public function getData($begin, $end) {
@@ -27,7 +29,6 @@ class Chart {
         $requestUrl = URL['part1'] . $begin . "/" . $end . URL['part2'];      
         
         return $requestUrl;
-    }
-    
+    }    
 }
 

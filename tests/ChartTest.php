@@ -9,9 +9,7 @@ class ChartTest extends TestCase {
      
     /** @test */
     public function parseJsonShouldReturnArray() { 
-        $time = time();
         $this->assertIsArray(Chart::parseJson(@file_get_contents($this->url)));
-        echo "\n" . "Parse time: " . (time() - $time) . "\n";
     }
     
     /** 
