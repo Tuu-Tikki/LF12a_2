@@ -8,8 +8,10 @@ class ChartTest extends TestCase {
     private $url = 'chart.json';
      
     /** @test */
-    public function parseJsonShouldReturnArray() {     
+    public function parseJsonShouldReturnArray() { 
+        $time = time();
         $this->assertIsArray(Chart::parseJson(@file_get_contents($this->url)));
+        echo "\n" . "Parse time: " . (time() - $time) . "\n";
     }
     
     /** 

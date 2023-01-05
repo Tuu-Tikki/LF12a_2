@@ -3,27 +3,13 @@
 class Chart {
     
     public static function parseJson($answer) {
-        $pattern = '/.+series\\\\":\[/';                
-        $replacement = "\[";                
-        $json = preg_replace($pattern, $replacement, $answer);
-
-        $pattern = '/\]}}\)\(\).+/';
-        $replacement = "\]";
-        $json = preg_replace($pattern, $replacement, $json);
-
-        $pattern = '/<\\\\\\\\\\\\/';
-        $replacement = "<";
-        $json = preg_replace($pattern, $replacement, $json);
-
-        $pattern = '/\\\/';
-        $replacement = "";
-        $json = preg_replace($pattern, $replacement, $json);
-
-        $pattern = '/,\"events\":{\"legendItemClick\":showConventionalSeries,\"hide\":hideConventionalSeries}/';
-        $replacement = "";
-        $json = preg_replace($pattern, $replacement, $json);
-
-        return json_decode($json, true);
+        $pattern = '/\[{\\\\"id\\\\":.+\]\]}\]/';                  
+        echo "\n" . $answer . "\n";
+        $result = preg_match_all($pattern, $answer, $matches);
+        echo "Result: " . $result . "\n";
+        $str = trim(stripslashes($matches[0][0]),'[]');
+        echo $str;
+        return json_decode($str, true);
     }
     
     public function getData($begin, $end) {
