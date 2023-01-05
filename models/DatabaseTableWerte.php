@@ -21,6 +21,20 @@ class DatabaseTableWerte {
         $result = $statement->execute([":idf" => $energyData->getType(), ":timestamp" => $energyData->getTimeStamp(), ":datetime" => $energyData->getDateTime(), ":value" => $energyData->getValue()]);
     }
     
+    public static function writeBunch($energyDataBunch) {
+        $pdo = self::setPDO();
+        $sql = "INSERT IGNORE INTO werte (kennwertIdf, unixzeitstempel, datumzeit, wert) VALUES ";
+        foreach ($energyDataBunch as $key => $energy) {
+            $sql = $sql . "('" . $energy->getType() . "', '" . $energy->getTimeStamp() .
+                    "', '" . $energy->getDateTime() . "', '" . $energy->getValue() . "')";
+            if (!($key === array_key_last($energyDataBunch))) {
+                $sql = $sql . ", ";
+            }
+        }
+
+        $result = $pdo->query($sql);
+    }
+    
     public static function isValueExist(Energy $energyData) {
         $pdo = self::setPDO();
         $sql = "SELECT * FROM werte WHERE kennwertIdf=:idf AND unixzeitstempel=:timestamp AND wert=:value";

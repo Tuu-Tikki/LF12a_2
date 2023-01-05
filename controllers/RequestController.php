@@ -16,12 +16,8 @@ class RequestController {
     }
     
     public function saveEnergyData($energyDataBunch) {
-        if (!empty($energyDataBunch)){
-            foreach ($energyDataBunch as $energy) {
-                if (!DatabaseTableWerte::isValueExist($energy)) {
-                    DatabaseTableWerte::write($energy);
-                }
-            }
+        if (!empty($energyDataBunch)) {
+            DatabaseTableWerte::writeBunch($energyDataBunch);
         }
     }
     
@@ -34,7 +30,7 @@ class RequestController {
             return "Keine Daten für den angegebenen Zeitraum: [" . 
                     $beginDate . "] - [" . $endDate . "]";
         } else {
-            return "Es gibt " . array_sum(array_map("count", $data)) . " neue Einträge für den angegebenen Zeitraum: [" . 
+            return "Es gibt " . array_sum(array_map("count", $data)) . " Einträge für den angegebenen Zeitraum: [" . 
                     $beginDate . "] - [" . $endDate . "]";
         }
     }
