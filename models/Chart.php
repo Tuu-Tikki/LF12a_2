@@ -7,8 +7,11 @@ class Chart {
         echo "\n" . $answer . "\n";
         $result = preg_match_all($pattern, $answer, $matches);
         echo "Result: " . $result . "\n";
-        $str = trim(stripslashes($matches[0][0]),'[]');
+        $str = stripslashes($matches[0][0]);
         echo $str;
+        $file = fopen('test.txt', 'w');
+        fwrite($file, $str);
+        fclose($file);
         return json_decode($str, true);
     }
     
