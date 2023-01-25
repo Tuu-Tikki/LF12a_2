@@ -18,7 +18,7 @@ class ChartTest extends TestCase {
     */
     public function createUrlShouldReturnUrl($begin, $end) {
         $url = Chart::createUrl($begin, $end);
-        $this->assertEquals(URL['part1'] . '20.11.2022/20.12.2022' . URL['part2'],$url);
+        $this->assertEquals(URL['beginning'] . '20.11.2022/20.12.2022' . URL['end'],$url);
     }
     
     public function dateDataProvider(): array {

@@ -1,17 +1,21 @@
 <?php
 
-define("DB", "energiedaten");
+//Credentials
 define("HOST", "127.0.0.1");
-
-define("USER", "user");
-define("PASSWORD", "energieDatenLF12");
-
 define("ADMIN", "root");
 define("ADMINPASS", "");
 
+//Application's settings
+define("DB", "energiedaten");
+define("USER", "user");
+define("PASSWORD", "energieDatenLF12");
+
+define ("MAXDAYS", 28); //the maximum number of days for which the website returns hourly results
+
 define("URL", [
-            "part1" => "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/",
-            "part2" => "/today/chart.json"
+            "beginning" => "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/",
+            "middle" => "dd.mm.yyyy/dd.mm.yyyy", 
+            "end" => "/today/chart.json"
         ]);
 
 define("ENERGYTYPE", [

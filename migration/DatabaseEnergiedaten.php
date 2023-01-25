@@ -14,7 +14,7 @@ class DatabaseEnergiedaten {
         return !empty($this->pdo->query($sql)->fetch());
     }
     
-    public function createUser() {
+    private function createUser() {
         $sql = 'CREATE USER IF NOT EXISTS `' . USER . '`@`' . HOST . '` IDENTIFIED BY "' . PASSWORD . '";
                 GRANT SELECT, INSERT, UPDATE, DELETE ON `energiedaten`.* TO `' . USER . '`@`' . HOST . '`;
                 FLUSH PRIVILEGES;
@@ -22,8 +22,15 @@ class DatabaseEnergiedaten {
         $this->pdo->query($sql);
     }
     
-    public function create() {
-        $sql = file_get_contents(__DIR__.'\migration\energiedaten.sql');
+    private function create() {
+        $sql = file_get_contents(__DIR__.'\energiedaten.sql');
         $this->pdo->query($sql);    
+    }
+    
+    public function init() {
+        if (!$this->isExist()) {
+            $this->create();
+            $this->createUser();
+        }
     }
 }

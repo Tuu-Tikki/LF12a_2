@@ -26,7 +26,7 @@ class Chart {
         $requestUrl = null;
         $begin = date("d.m.Y", strtotime($begin));
         $end = date("d.m.Y", strtotime($end));
-        $requestUrl = URL['part1'] . $begin . "/" . $end . URL['part2'];      
+        $requestUrl = URL['beginning'] . $begin . "/" . $end . URL['end'];      
         
         return $requestUrl;
     }    
