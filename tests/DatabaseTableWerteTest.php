@@ -11,7 +11,7 @@ class DatabaseTableWerteTest extends TestCase {
       
     /** @test*/
     public function getEnergyDataShouldReturnArray() {
-        $this->assertIsArray(DatabaseTableWerte::getEnergyData(2));
+        $this->assertIsArray(DatabaseTableWerte::getLastEnergyData());
     }
     
     /** @test */

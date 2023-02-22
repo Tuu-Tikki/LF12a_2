@@ -1,6 +1,7 @@
 <div class="data">
     <h4>Energiedaten</h4>
-    <h5>Es gibt <?php echo $rowCount; ?> Einträge in Datenbank</h5>
+    <p>Es gibt <?php echo $rowCount; ?> Einträge in Datenbank</p>
+    <p>In der Tabelle werden die Daten für den letzten Tag in der Datenbank gezeigt </p>
     <table>
         <tr>
             <th>Datum und Zeit</th>
