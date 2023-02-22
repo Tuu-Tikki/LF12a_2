@@ -1,4 +1,4 @@
-<div>
+<div class="data">
     <h4>Energiedaten</h4>
     <h5>Es gibt <?php echo $rowCount; ?> Einträge in Datenbank</h5>
     <table>
