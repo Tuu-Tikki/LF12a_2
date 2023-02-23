@@ -14,6 +14,10 @@ class EnergyDataTableController {
         return $table;
     }
     
+    public function getDatesOfRecords() {
+        return DatabaseTableWerte::getTimeFramesForDatabaseEntries();
+    }
+    
     public function getRowCount() {
         return DatabaseTableWerte::getRowCount();
     }

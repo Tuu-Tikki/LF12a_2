@@ -3,12 +3,7 @@
 use PHPUnit\Framework\TestCase;
 include_once '../load.php';
 
-class DatabaseTableWerteTest extends TestCase {
-    /** @test */
-    public function getAllShouldReturnArray() {     
-        $this->assertIsArray(DatabaseTableWerte::getAll());
-    }
-      
+class DatabaseTableWerteTest extends TestCase {    
     /** @test*/
     public function getEnergyDataShouldReturnArray() {
         $this->assertIsArray(DatabaseTableWerte::getLastEnergyData());
@@ -20,8 +15,8 @@ class DatabaseTableWerteTest extends TestCase {
     }
     
     /** @test */
-    public function isValueNotExistShouldReturnFalse() {
-        $energy = new Energy(36, "9672318800000", 509.5);
-        $this->assertFalse(DatabaseTableWerte::isValueExist($energy));
+    public function getTimeFramesForDatabaseEntriesShouldReturnArray() {
+        $dates = DatabaseTableWerte::getTimeFramesForDatabaseEntries();
+        $this->assertIsArray($dates);
     }
 }

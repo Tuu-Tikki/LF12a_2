@@ -1,27 +1,19 @@
 <?php
 
 class DatabaseTableWerte {
-
-    public static function getAll() {
-        $pdo = self::setPDO();
-        return $pdo->query("SELECT * FROM werte JOIN kennwerte ON werte.kennwertIdf=kennwerte.id ORDER BY unixzeitstempel DESC")
-                ->fetchAll();
-    }
     
+    private static function setPDO() {
+        $dsn = 'mysql:dbname='.DB.';host='.HOST;
+        return new PDO($dsn, USER, PASSWORD);  
+    }
+
     public static function getLastEnergyData() {
         $pdo = self::setPDO();
         $sql = "SELECT * FROM werte JOIN kennwerte ON werte.kennwertIdf=kennwerte.id "
                 . "WHERE unixzeitstempel > (SELECT MAX(werte.unixzeitstempel) FROM werte)-86400000 ";
         return $pdo->query($sql)->fetchAll();
     }
-    
-    public static function write(Energy $energyData) {
-        $pdo = self::setPDO();
-        $sql = "INSERT INTO werte(kennwertIdf, unixzeitstempel, datumzeit, wert) VALUES(:idf, :timestamp, :datetime, :value)";
-        $statement = $pdo->prepare($sql);
-        $result = $statement->execute([":idf" => $energyData->getType(), ":timestamp" => $energyData->getTimeStamp(), ":datetime" => $energyData->getDateTime(), ":value" => $energyData->getValue()]);
-    }
-    
+
     public static function writeBunch($energyDataBunch) {
         $pdo = self::setPDO();
         $sql = "INSERT IGNORE INTO werte (kennwertIdf, unixzeitstempel, datumzeit, wert) VALUES ";
@@ -35,22 +27,32 @@ class DatabaseTableWerte {
 
         $result = $pdo->query($sql);
     }
-    
-    public static function isValueExist(Energy $energyData) {
-        $pdo = self::setPDO();
-        $sql = "SELECT * FROM werte WHERE kennwertIdf=:idf AND unixzeitstempel=:timestamp AND wert=:value";
-        $statement = $pdo->prepare($sql);
-        $result = $statement->execute([":idf" => $energyData->getType(), ":timestamp" => $energyData->getTimeStamp(), ":value" => $energyData->getValue()]);
-        return $statement->fetchColumn();
-    }
-    
-    private static function setPDO() {
-        $dsn = 'mysql:dbname='.DB.';host='.HOST;
-        return new PDO($dsn, USER, PASSWORD);  
-    }
-    
+       
     public static function getRowCount() {
         $pdo = self::setPDO();
         return (int)$pdo->query('SELECT COUNT(*) FROM werte')->fetchColumn(); 
+    }
+    
+    public static function getTimeFramesForDatabaseEntries() {
+        $pdo = self::setPDO();
+        $sql = "SELECT * FROM werte GROUP BY unixzeitstempel ASC";
+        $result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $dates = [];
+        $begin = null;
+        $end = null;
+        foreach ($result as $row) {
+            $begin = $begin ?? $row['unixzeitstempel']/1000;
+            $end = $end ?? $row['unixzeitstempel']/1000;
+            if ($end != ($row['unixzeitstempel']/1000 - 3600) && $end > $begin) {
+                $date = [date("Y-m-d H:i:s",$begin), date("Y-m-d H:i:s",$end)];
+                $dates[] = $date;
+                $end = null;
+                $begin = null;
+            } else {
+                $end = $row['unixzeitstempel']/1000;
+            }            
+        }
+        $dates[] = [date("Y-m-d H:i:s",$begin), date("Y-m-d H:i:s",$end)];
+        return $dates;
     }
 }

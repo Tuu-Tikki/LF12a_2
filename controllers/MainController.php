@@ -17,6 +17,7 @@ if (RequestController::isRequestSubmitted()) {
 
 $tableController = new EnergyDataTableController();
 $rowCount = $tableController->getRowCount();
+$dates = $tableController->getDatesOfRecords();
 $dataList = $tableController->getTableData();
 
 require_once __DIR__.'\..\views\main.php';
