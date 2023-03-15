@@ -10,7 +10,8 @@ class DatabaseTableWerte {
     public static function getLastEnergyData() {
         $pdo = self::setPDO();
         $sql = "SELECT * FROM werte JOIN kennwerte ON werte.kennwertIdf=kennwerte.id "
-                . "WHERE unixzeitstempel > (SELECT MAX(werte.unixzeitstempel) FROM werte)-86400000 ";
+                . "WHERE unixzeitstempel > (SELECT MAX(werte.unixzeitstempel) FROM werte)-86400000 "
+                . " ORDER BY kennwertIdf, unixzeitstempel DESC";
         return $pdo->query($sql)->fetchAll();
     }
 
