@@ -40,6 +40,4 @@ ALTER TABLE `werte`
 ALTER TABLE `werte`
   ADD CONSTRAINT `werte_ibfk_1` FOREIGN KEY (`kennwertIdf`) REFERENCES `kennwerte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `werte`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `einmaligkeit` (`kennwertIdf`,`unixzeitstempel`,`wert`) USING BTREE,
-  ADD KEY `kennwertIdf` (`kennwertIdf`);
+  ADD UNIQUE KEY `einmaligkeit` (`kennwertIdf`,`unixzeitstempel`,`wert`) USING BTREE;
