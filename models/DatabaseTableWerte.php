@@ -38,6 +38,9 @@ class DatabaseTableWerte {
         $pdo = self::setPDO();
         $sql = "SELECT * FROM werte GROUP BY unixzeitstempel ASC";
         $result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($result)) {
+            return [];
+        }
         $dates = [];
         $begin = null;
         $end = null;

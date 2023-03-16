@@ -14,7 +14,7 @@ class EnergyTest extends TestCase {
      * @test
      * @dataProvider validRawDataProvider 
     */
-    public function rawDataShouldHaveIdDataEnergytypeKeys($rawData) {
+    public function isDataValidShoudReturnTrue($rawData) {
         $this->assertTrue(Energy::isDataValid($rawData));
     }
     
@@ -22,7 +22,7 @@ class EnergyTest extends TestCase {
      * @test
      * @dataProvider invalidRawDataProvider 
     */
-    public function rawDataHaveNotIdDataEnergytypeKeys($rawData) {
+    public function isDataValidShoudReturnFalse($rawData) {
         $this->assertFalse(Energy::isDataValid($rawData));
     }
     
@@ -30,7 +30,7 @@ class EnergyTest extends TestCase {
      * @test
      * @dataProvider validRawDataProvider 
     */
-    public function createFromRawData($rawData) {
+    public function createFromRawDataShouldReturnArrayOfEnergy($rawData) {
         $energyArr = Energy::createFromRawData($rawData);
         $this->assertContainsOnlyInstancesOf(Energy::class, $energyArr);
     }

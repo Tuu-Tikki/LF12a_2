@@ -5,7 +5,7 @@ include_once '../load.php';
 
 class DatabaseTableWerteTest extends TestCase {    
     /** @test*/
-    public function getEnergyDataShouldReturnArray() {
+    public function getLastEnergyDataShouldReturnArray() {
         $this->assertIsArray(DatabaseTableWerte::getLastEnergyData());
     }
     

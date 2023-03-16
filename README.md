@@ -13,10 +13,11 @@ The webpage has a request-form to get the data and a table with most recent reco
 
 ### Start the app
 
-Start XAMPP (run as administrator), start Apache and MySql. 
+Start XAMPP (run as administrator), start it's modules: Apache and MySql. 
 The database for the application will be created automatically at the first start, if there was none before.
 In the browser open the url http://localhost/LF12a_2/index.php
 
 ### Request the data
 
 Choose the period and press the button "Abfrage senden"
+The request can take several minutes, please don't click any buttons during the request processing.
